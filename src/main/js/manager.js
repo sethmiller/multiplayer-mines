@@ -60,11 +60,12 @@ function GameManager(id, board) {
 
 		if (square.revealed) {
 			return true;
-		} else if (square.mine) {
+		} else if (typeof(square.mine.row) !== "undefined") {
 			square.mine.player = player.id;
 			square.revealed = true;
 			return true;
 		} else {
+			console.log("checking");
 			checkSquare(row, column);
 			return false;
 		}

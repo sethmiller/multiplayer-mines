@@ -59,7 +59,7 @@ function builder(rowCount, columnCount, mineCount) {
 	function countSquare(row, column) {
 		var count = 0;
 		withSquareBlock(row, column, function(currentRow, currentColumn) {
-			if (currentColumn && currentColumn.mine) {
+			if (currentColumn && typeof(currentColumn.mine.row) !== "undefined") {
 				count++;
 			}
 		});
@@ -72,7 +72,7 @@ function builder(rowCount, columnCount, mineCount) {
 		row = rand(0, rowCount);
 		column = rand(0, columnCount);
 
-		if (!board.rows[row].squares[column].mine) {
+		if (typeof(board.rows[row].squares[column].mine.row) === "undefined") {
 			mine = new Mine(row, column);
 			board.rows[row].squares[column].mine = mine;
 			board.mines.push(mine);
@@ -81,7 +81,7 @@ function builder(rowCount, columnCount, mineCount) {
 
 	board.rows.forEach(function(row, r) {
 		row.squares.forEach(function(square, c) {
-			if (!square.mine) {
+			if (typeof(square.mine.row) === "undefined") {
 				square.count = countSquare(r, c) || "";
 			}
 		});
@@ -94,3 +94,4 @@ if (typeof exports !== "undefined") {
 	exports.Board = Board;
 	exports.builder = builder;
 }
+
