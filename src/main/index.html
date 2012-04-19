@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	<title>multiplayer mines</title>
+	<link href="css/mines.css" type="text/css" rel="stylesheet" /> 
+	<script src="//localhost:9000/socket.io/socket.io.js"></script>
+	<script src="http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.0.0.js"></script>
+	<script src="https://raw.github.com/SteveSanderson/knockout.mapping/master/build/output/knockout.mapping-latest.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="js/board.js"></script>
+	<script src="js/manager.js"></script>
+	<script src="js/mines.js"></script>
+</head>
+<body>
+	<div>
+		<button id="create-game">Create Game</button>
+		<button id="leave-game" data-bind="visible: gameId">Leave Game</button>
+		<div data-bind="visible: !gameId()">
+			<input id="join-game-id" data-bind="value: joinGameId, valueUpdate: 'afterkeydown paste cut'" />
+			<button id="join-game" data-bind="enable: validateJoinGameId">Join Game</button> <br />
+		</div>
+		<div data-bind="text: gameId"></div>
+		<div class="board" data-bind="visible: gameId, foreach: board.rows">
+			<div class="row" data-bind="foreach: squares">
+				<a href="#" data-bind="click: function() { board.checkSquare(socket, $parent.number(), number()); }, css: { square: true, unknown: !count(), revealed: revealed, mine: (mine && mine.player == $parents[1].playerId()), theirs: (mine.player && mine.player != $parents[1].playerId()) }, attr: { 'data-count': count() }"></a>
+			</div>
+		</div>
+	</div>
+	<div id="status">
+		<ul id="scores" data-bind="foreach: scores">
+			<li data-bind="text: (id + ': ' + score), css: { current: $root.currentlyMoving() == id }"></li>
+		</ul>
+	</div>
+</body>
+</html>

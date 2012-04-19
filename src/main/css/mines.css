@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+html, body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.row {
+	margin: 0;
+	padding: 0;
+}
+
+.row a {
+	color: black;
+	text-decoration: none;
+}
+
+.square {
+	border: 1px solid black;
+	display: inline-block;
+	height: 1em;
+	margin: 0 1px 1px 0;
+	padding: 0;
+	position: relative;
+	width: 1em;
+}
+
+.square:before {
+	content: attr(data-count);
+	left: 4px;
+	position: absolute;
+	top: -1px;
+}
+
+.square.unknown {
+	background-color: darkgray;
+}
+
+.square.revealed {
+	background-color: white;
+}
+
+.square.mine {
+	background-color: red;
+}
+
+.square.theirs {
+	background-color: blue;
+	color: white;
+}
+
+.square.mine:before, .square.theirs:before {
+	content: "⚙";
+	left: 1px;
+}
+
+#status ul#scores {
+	list-style: none;
+}
+#status ul#scores li {
+	border-radius: 3px;
+	left: 1em;
+	position: relative;
+}
+
+#status ul#scores li.current {
+	left: 0;
+}
+
+#status ul#scores li.current:before {
+	content: "➔";
+}
