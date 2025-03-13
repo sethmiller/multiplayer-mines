@@ -27,16 +27,13 @@ $(document).ready(function() {
 
 	var socket = io.connect('http://localhost:9000')
 		.on("connect", function(data) {
-			playerId(socket.socket.sessionid);
+			playerId(socket.id);
 		})
 		.on("game.new", function(data) {
-			console.log(data);
-
 			gameId(data.id);
 			ko.mapping.fromJS(new Board(data.board.rows.length, data.board.rows[0].length, data.mineCount), {}, board);
 			updateGame(data);
 		}).on("game.update", function(data) {
-			console.log(data);
 			updateGame(data);
 		}).on("error", function(data) {
 			console.log("something bad happened", data);
